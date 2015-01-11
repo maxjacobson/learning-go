@@ -1,32 +1,32 @@
 package main
 
 import (
-  "fmt"
-  "time"
+	"fmt"
+	"time"
 )
 
 func main() {
-  c := make(chan int)
-  for i := 0; i < 5; i++ {
-    worker := &Worker{id: i}
-    go worker.process(c)
-  }
-  for i := 2; i < 10; i++ {
-    c <- i
-    time.Sleep(time.Millisecond * 50)
-  }
+	c := make(chan int)
+	for i := 0; i < 5; i++ {
+		worker := &Worker{id: i}
+		go worker.process(c)
+	}
+	for i := 2; i < 10; i++ {
+		c <- i
+		time.Sleep(time.Millisecond * 50)
+	}
 }
 
 type Worker struct {
-  id int
+	id int
 }
 
 func (w *Worker) process(c chan int) bool {
-  fmt.Println("Hey! I'm processing! I'm", w.id)
-  for {
-    data := <-c
-    fmt.Printf("worker %d got %d\n", w.id, data)
-  }
+	fmt.Println("Hey! I'm processing! I'm", w.id)
+	for {
+		data := <-c
+		fmt.Printf("worker %d got %d\n", w.id, data)
+	}
 }
 
 // func isPrime(num int) bool {
