@@ -5,7 +5,8 @@ package main
 
 import (
 	"fmt"
-	"math"
+
+	"github.com/maxjacobson/learning-go/prim"
 )
 
 type Prime struct {
@@ -32,23 +33,9 @@ func primes() <-chan Prime {
 		for i := 2; ; i++ {
 			c <- Prime{
 				num:     i,
-				isPrime: isPrime(i),
+				isPrime: prim.IsPrime(i),
 			}
 		}
 	}()
 	return c
-}
-
-func isPrime(num int) bool {
-	magic := sqrt(num)
-	for i := 2; i <= magic; i++ {
-		if num%i == 0 {
-			return false
-		}
-	}
-	return true
-}
-
-func sqrt(num int) int {
-	return int(math.Sqrt(float64(num)))
 }
